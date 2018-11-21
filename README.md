@@ -1,12 +1,7 @@
-NES Hello, World!
+NES Emulator by Rust
 =====================
 
-This repository is technical verification what run a nes rom of hello world by Rust.
-
-ScreenShot
----------------------
-
-![screenshot](screenshot.png)
+This repository is technical verification what emulation the nindendo entertainment system.
 
 Usage
 ---------------------
