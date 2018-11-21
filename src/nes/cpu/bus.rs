@@ -34,13 +34,9 @@ impl <'a, T: 'a> CpuBus for Bus<'a, T> where T: NesCassette {
             // 0x4000..0x401F => unimplemented!(), // APU I/O Keypad
             // 0x4020..0x5FFF => unimplemented!(), // Expantion Rom
             // 0x6000..0x7FFF => unimplemented!(), // Expantion Ram
-            0x8000...0xBFFF => {
-                // ToDo: refactoring
-                if self.cassette.program_rom_length() <= 0x4000 {
-                    self.cassette.read_program_rom(addr - 0xC000)
-                } else {
-                    self.cassette.read_program_rom(addr - 0x8000)
-                }
+            0x8000...0xBFFF => self.cassette.read_program_rom(addr - 0x8000),
+            0xC000...0xFFFF if self.cassette.program_rom_length() <= 0x4000 => {
+                self.cassette.read_program_rom(addr - 0xC000)
             },
             0xC000...0xFFFF => self.cassette.read_program_rom(addr - 0x8000),
             _ => panic!("unexpected memory area access!"),
@@ -161,5 +157,23 @@ mod cpu_bus_test {
         );
 
         assert_eq!(cpu_bus.read_twice(0x8000), 0x5678);
+    }
+
+    #[test]
+    fn mirror_first_program_rom_16k() {
+        let mut cassette = CassetteMock::new();
+        let mut ppu = Ppu::new(cassette.character_rom.clone());
+        let mut ram = Ram::new(vec![0; 2048]);
+        cassette.program_rom = vec![0; 0x4000];
+        cassette.program_rom[0x0000] = 0xFF;
+
+        let mut cpu_bus = Bus::new(
+            &cassette,
+            &mut ppu,
+            &mut ram,
+        );
+
+        assert_eq!(cpu_bus.read(0x8000), 0xFF);
+        assert_eq!(cpu_bus.read(0xC000), 0xFF);
     }
 }
