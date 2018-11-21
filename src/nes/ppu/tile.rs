@@ -38,7 +38,7 @@ mod tile_test {
     use super::*;
     use super::super::PaletteRam;
     use super::super::TilePosition;
-    use nes::ram::Ram;
+    use crate::nes::ram::Ram;
 
     #[test]
     fn build_test() {

@@ -5,7 +5,7 @@ use sdl2::pixels::Color;
 use sdl2::render::WindowCanvas;
 use sdl2::rect::Point;
 
-use nes::ppu::background::Background;
+use crate::nes::ppu::background::Background;
 
 pub struct Screen {
     pub canvas: WindowCanvas,

@@ -11,12 +11,12 @@ pub struct INesHeader {
 }
 
 impl INesHeader {
-    pub fn new(buf: &Vec<u8>) -> Result<Self, CassetteInitializeError> { 
+    pub fn new(buf: &Vec<u8>) -> Result<Self, CassetteInitializeError> {
         // <iNES file format header>
         // 0-3: Constant $4E $45 $53 $1A ("NES" followed by MS-DOS end-of-file)
         // 4: Size of PRG ROM in 16 KB units
         // 5: Size of CHR ROM in 8 KB units (Value 0 means the board uses CHR RAM)
-        // 
+        //
         // refer: https://wiki.nesdev.com/w/index.php/INES
 
         let magic_numbers = *array_ref!(buf, 0, 4);

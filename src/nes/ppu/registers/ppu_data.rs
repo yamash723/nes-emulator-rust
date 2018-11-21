@@ -1,4 +1,4 @@
-use nes::ppu::PpuContext;
+use crate::nes::ppu::PpuContext;
 
 enum MapType {
     PatternTable,
@@ -69,8 +69,8 @@ impl PpuData {
 #[cfg(test)]
 mod ppu_data_test {
     use super::*;
-    use nes::ppu::palette_ram::PaletteRam;
-    use nes::ram::Ram;
+    use crate::nes::ppu::palette_ram::PaletteRam;
+    use crate::nes::ram::Ram;
 
     #[test]
     fn read_pattern_test() {

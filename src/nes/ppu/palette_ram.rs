@@ -1,5 +1,5 @@
 use std::ops::Range;
-use nes::ram::Ram;
+use crate::nes::ram::Ram;
 use super::palette::PaletteGroup;
 
 pub enum PaletteType {

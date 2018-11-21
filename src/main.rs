@@ -3,7 +3,7 @@
 extern crate sdl2;
 
 mod nes;
-use nes::Nes;
+use crate::nes::Nes;
 
 fn main() {
     let mut nes = Nes::new("rom/hello_world.nes");

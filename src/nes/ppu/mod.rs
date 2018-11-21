@@ -13,7 +13,7 @@ use self::tile::Tile;
 use self::tile_position::TilePosition;
 use self::background::Background;
 
-use nes::ram::Ram;
+use crate::nes::ram::Ram;
 
 pub struct Ppu {
     pub cycle: usize,

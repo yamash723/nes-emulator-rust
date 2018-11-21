@@ -1,6 +1,6 @@
-use nes::cassette::NesCassette;
-use nes::ppu::Ppu;
-use nes::ram::Ram;
+use crate::nes::cassette::NesCassette;
+use crate::nes::ppu::Ppu;
+use crate::nes::ram::Ram;
 
 pub struct Bus<'a, T: 'a> where T: NesCassette {
     cassette: &'a T,

@@ -96,8 +96,8 @@ impl Controller {
 #[cfg(test)]
 mod controller_test {
     use super::*;
-    use nes::cpu::CpuBus;
-    use nes::cpu::registers::Registers;
+    use crate::nes::cpu::CpuBus;
+    use crate::nes::cpu::registers::Registers;
 
     struct BusMock {
         ram: Vec<u8>,

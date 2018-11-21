@@ -1,7 +1,7 @@
-use nes::cpu::bus::CpuBus;
-use nes::cpu::registers::Registers;
-use nes::cpu::controller::Controller;
-use nes::cpu::opecode::{Command, OPECODE_MAP, AddressingMode};
+use crate::nes::cpu::bus::CpuBus;
+use crate::nes::cpu::registers::Registers;
+use crate::nes::cpu::controller::Controller;
+use crate::nes::cpu::opecode::{Command, OPECODE_MAP, AddressingMode};
 
 pub struct Calculator;
 
@@ -81,7 +81,7 @@ impl Calculator {
 
     fn DEY(registers: &mut Registers) {
         let data = registers.Y - 1;
-        
+
         registers.Y = data;
         registers.P.negative = (data & 0x80) == 0x80;
         registers.P.zero = data == 0;
@@ -89,7 +89,7 @@ impl Calculator {
 
     fn INX(registers: &mut Registers) {
         let data = registers.X + 1;
-        
+
         registers.X = data;
         registers.P.negative = (data & 0x80) == 0x80;
         registers.P.zero = data == 0;

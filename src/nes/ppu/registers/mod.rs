@@ -10,7 +10,7 @@ use self::ppu_scroll::PpuScroll;
 use self::ppu_addr::PpuAddr;
 use self::ppu_data::PpuData;
 
-use nes::ppu::PpuContext;
+use crate::nes::ppu::PpuContext;
 
 pub struct Registers {
     pub ppu_ctrl: PpuCtrl,
@@ -80,8 +80,8 @@ impl Registers {
 #[cfg(test)]
 mod registers_test {
     use super::*;
-    use nes::ppu::palette_ram::PaletteRam;
-    use nes::ram::Ram;
+    use crate::nes::ppu::palette_ram::PaletteRam;
+    use crate::nes::ram::Ram;
 
     fn dummy_ppu_context() -> PpuContext {
         PpuContext {

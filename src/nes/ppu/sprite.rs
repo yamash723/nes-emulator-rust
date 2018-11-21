@@ -1,4 +1,4 @@
-use nes::ram::Ram;
+use crate::nes::ram::Ram;
 
 #[derive(Debug)]
 pub struct Sprite(Vec<Vec<u8>>);

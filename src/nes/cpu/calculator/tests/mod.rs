@@ -1,7 +1,7 @@
 use super::*;
 
-use nes::cpu::bus::CpuBus;
-use nes::cpu::registers::Registers;
+use crate::nes::cpu::bus::CpuBus;
+use crate::nes::cpu::registers::Registers;
 
 struct BusMock {
     ram: Vec<u8>,

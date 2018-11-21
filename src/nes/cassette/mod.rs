@@ -21,13 +21,13 @@ impl Cassette {
     pub fn new(path: &str) -> Result<Self, CassetteInitializeError> {
         let rom_bytes = Self::load_rom_bytes(path)?;
         let header = INesHeader::new(&rom_bytes)?;
-        
+
         // <iNES file format>
         // Header (16 bytes)
         // Trainer, if present (0 or 512 bytes)
         // PRG ROM data (16384 * x bytes)
         // CHR ROM data, if present (8192 * y bytes)
-        // 
+        //
         // refer: https://wiki.nesdev.com/w/index.php/INES
 
         let program_rom = Self::split_program_rom(&header, &rom_bytes);
@@ -144,7 +144,7 @@ mod cassette_test {
 
         let header = INesHeader::new(&rom_bytes.clone()).unwrap();
         let program_rom = Cassette::split_program_rom(&header, &rom_bytes);
-        
+
         assert_eq!(test_program_rom.to_vec(), program_rom);
     }
 
@@ -167,7 +167,7 @@ mod cassette_test {
 
         let header = INesHeader::new(&rom_bytes.clone()).unwrap();
         let character_rom = Cassette::split_character_rom(&header, &rom_bytes);
-        
+
         assert_eq!(test_character_rom.to_vec(), character_rom);
     }
 }
