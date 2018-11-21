@@ -1,4 +1,3 @@
-use nes::ram::Ram;
 use nes::ppu::PpuContext;
 
 enum MapType {
@@ -12,10 +11,10 @@ struct PpuMemoryMapRule;
 impl PpuMemoryMapRule {
     fn address_to_map_type(addr: u16) -> MapType {
         match addr {
-            0x0000..0x1FFF => MapType::PatternTable,
-            0x2000..0x2FFF => MapType::Vram,
-            0x3000..0x3EFF => MapType::VramMirror,
-            0x3F00..0x3FFF => MapType::Palette, 
+            0x0000...0x1FFF => MapType::PatternTable,
+            0x2000...0x2FFF => MapType::Vram,
+            0x3000...0x3EFF => MapType::VramMirror,
+            0x3F00...0x3FFF => MapType::Palette,
             _ => panic!("Access to out of PPU memory."),
         }
     }
@@ -56,7 +55,7 @@ impl PpuData {
 
         buf
     }
-    
+
     fn calibrate_address(&self, addr: u16) -> u16 {
         match PpuMemoryMapRule::address_to_map_type(addr) {
             MapType::PatternTable => addr,
@@ -71,6 +70,7 @@ impl PpuData {
 mod ppu_data_test {
     use super::*;
     use nes::ppu::palette_ram::PaletteRam;
+    use nes::ram::Ram;
 
     #[test]
     fn read_pattern_test() {

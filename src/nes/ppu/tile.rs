@@ -1,4 +1,3 @@
-use nes::ram::Ram;
 use super::PpuContext;
 use super::sprite::Sprite;
 use super::palette::PaletteGroup;
@@ -19,7 +18,7 @@ impl Tile {
         // ToDo: refactoring here.
         let attribute_addr = attributes_id as u16 + 0x03C0; // 0x03C0 is name table size.
         let attribute = ppu_context.vram.read(attribute_addr);
-        
+
         let palette_id = position.get_palette_id(attribute);
         let palettes = ppu_context.palette_ram.get_palettes(palette_id, PaletteType::Background);
         let sprite_number = ppu_context.vram.read(position.get_tile_number() as u16);
@@ -39,10 +38,11 @@ mod tile_test {
     use super::*;
     use super::super::PaletteRam;
     use super::super::TilePosition;
+    use nes::ram::Ram;
 
     #[test]
     fn build_test() {
-        /* build a workd 'H' 
+        /* build a workd 'H'
         Sprite vecter.
         3 3 1 0 0 3 3 1
         3 3 1 0 0 3 3 1

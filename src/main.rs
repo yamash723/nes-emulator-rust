@@ -1,5 +1,3 @@
-#![feature(exclusive_range_pattern)]
-
 #[macro_use] extern crate arrayref;
 #[macro_use] extern crate lazy_static;
 extern crate sdl2;

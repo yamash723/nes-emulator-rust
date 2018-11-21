@@ -10,7 +10,6 @@ use self::ppu_scroll::PpuScroll;
 use self::ppu_addr::PpuAddr;
 use self::ppu_data::PpuData;
 
-use nes::ram::Ram;
 use nes::ppu::PpuContext;
 
 pub struct Registers {
@@ -58,7 +57,7 @@ impl Registers {
         let addr = self.ppu_addr.read();
         let data = self.ppu_data.read(addr, ppu_context);
         self.increment_vram();
-        
+
         data
     }
 
@@ -82,6 +81,7 @@ impl Registers {
 mod registers_test {
     use super::*;
     use nes::ppu::palette_ram::PaletteRam;
+    use nes::ram::Ram;
 
     fn dummy_ppu_context() -> PpuContext {
         PpuContext {

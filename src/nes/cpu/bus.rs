@@ -27,14 +27,14 @@ impl <'a, T: 'a> Bus<'a, T> where T: NesCassette {
 impl <'a, T: 'a> CpuBus for Bus<'a, T> where T: NesCassette {
     fn read(&mut self, addr: u16) -> u8 {
         match addr {
-            0x0000..0x07FF => self.wram.read(addr),
-            0x0800..0x1FFF => self.wram.read(addr - 0x0800),
-            0x2000..0x2007 => self.ppu.read(addr),
-            0x2008..0x3FFF => self.ppu.read(addr - 0x2008),
+            0x0000...0x07FF => self.wram.read(addr),
+            0x0800...0x1FFF => self.wram.read(addr - 0x0800),
+            0x2000...0x2007 => self.ppu.read(addr),
+            0x2008...0x3FFF => self.ppu.read(addr - 0x2008),
             // 0x4000..0x401F => unimplemented!(), // APU I/O Keypad
             // 0x4020..0x5FFF => unimplemented!(), // Expantion Rom
             // 0x6000..0x7FFF => unimplemented!(), // Expantion Ram
-            0x8000..0xBFFF => {
+            0x8000...0xBFFF => {
                 // ToDo: refactoring
                 if self.cassette.program_rom_length() <= 0x4000 {
                     self.cassette.read_program_rom(addr - 0xC000)
@@ -42,7 +42,7 @@ impl <'a, T: 'a> CpuBus for Bus<'a, T> where T: NesCassette {
                     self.cassette.read_program_rom(addr - 0x8000)
                 }
             },
-            0xC000..0xFFFF => self.cassette.read_program_rom(addr - 0x8000),
+            0xC000...0xFFFF => self.cassette.read_program_rom(addr - 0x8000),
             _ => panic!("unexpected memory area access!"),
         }
     }
@@ -56,9 +56,9 @@ impl <'a, T: 'a> CpuBus for Bus<'a, T> where T: NesCassette {
 
     fn write(&mut self, addr: u16, data: u8) {
         match addr {
-            0x0000..0x07FF => self.wram.write(addr, data),
-            0x0800..0x1FFF => self.wram.write(addr - 0x0800, data),
-            0x2000..0x3FFF => self.ppu.write(addr - 0x2000, data),
+            0x0000...0x07FF => self.wram.write(addr, data),
+            0x0800...0x1FFF => self.wram.write(addr - 0x0800, data),
+            0x2000...0x3FFF => self.ppu.write(addr - 0x2000, data),
             // 0x4000..0x401F => unimplemented!(), // APU I/O Keypad
             // 0x4020..0x5FFF => unimplemented!(), // Expantion Rom
             // 0x6000..0x7FFF => unimplemented!(), // Expantion Ram
