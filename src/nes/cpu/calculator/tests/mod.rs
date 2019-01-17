@@ -39,3 +39,5 @@ mod ldy;
 mod sei;
 mod sta;
 mod txs;
+mod cld;
+mod bpl;

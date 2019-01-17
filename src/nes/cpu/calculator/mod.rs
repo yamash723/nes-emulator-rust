@@ -27,6 +27,9 @@ impl Calculator {
             Command::JMP => Calculator::JMP(registers, opeland),
             Command::SEI => Calculator::SEI(registers),
             Command::TXS => Calculator::TXS(registers),
+            Command::CLD => Calculator::CLD(registers),
+            Command::BPL => Calculator::BPL(registers, opeland),
+            _ => panic!("not unimplement command: {:?}", &command),
         };
 
         cycle
@@ -101,6 +104,16 @@ impl Calculator {
 
     fn SEI(registers: &mut Registers) {
         registers.P.interrupt = true;
+    }
+
+    fn CLD(registers: &mut Registers) {
+        registers.P.decimal = false;
+    }
+
+    fn BPL(registers: &mut Registers, opeland: u16) {
+        if !registers.P.negative {
+            registers.PC = opeland;
+        }
     }
 }
 

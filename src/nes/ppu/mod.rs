@@ -59,7 +59,7 @@ impl Ppu {
 
     pub fn write(&mut self, addr: u16, data: u8) {
         self.registers.write(addr, data, &mut self.context);
-    }    
+    }
 
     pub fn run(&mut self, cycle: usize) -> PpuRunResult {
         self.cycle += cycle;

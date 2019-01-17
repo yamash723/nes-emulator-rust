@@ -6,6 +6,6 @@ mod nes;
 use crate::nes::Nes;
 
 fn main() {
-    let mut nes = Nes::new("rom/hello_world.nes");
+    let mut nes = Nes::new("rom/nestest.nes");
     nes.run();
 }

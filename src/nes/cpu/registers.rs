@@ -124,7 +124,7 @@ mod registers_test {
         registers.P.interrupt = !registers.P.interrupt;
         registers.P.zero = !registers.P.zero;
         registers.P.carry = !registers.P.carry;
-        
+
         // negative:   true  => 1
         // overflow:   true  => 1
         // reserved:   false => 0
