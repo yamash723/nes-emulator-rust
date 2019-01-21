@@ -12,6 +12,7 @@ use self::cpu::{Cpu, Bus as CpuBus};
 use self::screen::Screen;
 
 use sdl2::event::Event;
+use time;
 
 const WIDTH: u32 = 256;
 const HEIGHT: u32 = 240;
@@ -44,6 +45,8 @@ impl Nes {
 
     pub fn run(&mut self) {
         let mut screen = Screen::new(WIDTH, HEIGHT);
+        let mut sec = time::get_time().sec;
+        let mut frame = 0;
 
         'main: loop {
             let cycle = {
@@ -56,6 +59,7 @@ impl Nes {
                 PpuRunResult::FinishedBuildAllBackgroundLine => {
                     let background = &self.ppu.background;
                     screen.render_background(&background);
+                    frame += 1;
                 },
                 _ => {},
             };
@@ -65,6 +69,12 @@ impl Nes {
                     Event::Quit {..} => break 'main,
                     _ => {}
                 }
+            }
+
+            if sec != time::get_time().sec {
+                println!("{} FPS", frame);
+                frame = 0;
+                sec = time::get_time().sec;
             }
         }
     }

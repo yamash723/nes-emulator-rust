@@ -8,6 +8,7 @@ edition = "2018"
 [dependencies]
 arrayref = "*"
 lazy_static = "1.0"
+time = "*"
 
 [dependencies.sdl2]
 version = "0.31"
