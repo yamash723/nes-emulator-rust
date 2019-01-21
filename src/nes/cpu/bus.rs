@@ -29,8 +29,7 @@ impl <'a, T: 'a> CpuBus for Bus<'a, T> where T: NesCassette {
         match addr {
             0x0000...0x07FF => self.wram.read(addr),
             0x0800...0x1FFF => self.wram.read(addr - 0x0800),
-            0x2000...0x2007 => self.ppu.read(addr),
-            0x2008...0x3FFF => self.ppu.read(addr - 0x2008),
+            0x2000...0x3FFF => self.ppu.read(addr - 0x2000),
             // 0x4000..0x401F => unimplemented!(), // APU I/O Keypad
             // 0x4020..0x5FFF => unimplemented!(), // Expantion Rom
             // 0x6000..0x7FFF => unimplemented!(), // Expantion Ram
