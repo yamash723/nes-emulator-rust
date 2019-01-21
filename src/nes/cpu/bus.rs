@@ -58,7 +58,7 @@ impl <'a, T: 'a> CpuBus for Bus<'a, T> where T: NesCassette {
             // 0x4000..0x401F => unimplemented!(), // APU I/O Keypad
             // 0x4020..0x5FFF => unimplemented!(), // Expantion Rom
             // 0x6000..0x7FFF => unimplemented!(), // Expantion Ram
-            _ => panic!("unexpected memory area access!"),
+            _ => panic!("unexpected memory area access! Addr: {:x}", addr),
         }
     }
 }

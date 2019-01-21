@@ -9,7 +9,7 @@ struct BusMock {
 
 impl BusMock {
     fn new() -> Self {
-        Self { ram: vec![0; 0x100] }
+        Self { ram: vec![0; 0x200] }
     }
 }
 
@@ -38,6 +38,9 @@ mod ldx;
 mod ldy;
 mod sei;
 mod sta;
+mod stx;
 mod txs;
 mod cld;
 mod bpl;
+mod jsr;
+mod tya;

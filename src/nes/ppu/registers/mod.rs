@@ -49,8 +49,7 @@ impl Registers {
     pub fn read(&mut self, addr: u16, ppu_context: &mut PpuContext) -> u8 {
         match addr {
             0x0007 => self.ppu_data_read(ppu_context),
-            _ => 0,
-            // _ => panic!("unimplement read address: {}", addr),
+            _ => panic!("unimplement read address: {}", addr),
         }
     }
 

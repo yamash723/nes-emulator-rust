@@ -21,12 +21,15 @@ impl Calculator {
             Command::LDY if *mode == AddressingMode::Immediate => Calculator::LDY_immediate(registers, opeland),
             Command::LDY => Calculator::LDY(registers, bus, opeland),
             Command::STA => Calculator::STA(registers, bus, opeland),
+            Command::STX => Calculator::STX(registers, bus, opeland),
             Command::BNE => Calculator::BNE(registers, opeland),
             Command::DEY => Calculator::DEY(registers),
             Command::INX => Calculator::INX(registers),
             Command::JMP => Calculator::JMP(registers, opeland),
+            Command::JSR => Calculator::JSR(registers, bus, opeland),
             Command::SEI => Calculator::SEI(registers),
             Command::TXS => Calculator::TXS(registers),
+            Command::TYA => Calculator::TYA(registers),
             Command::CLD => Calculator::CLD(registers),
             Command::BPL => Calculator::BPL(registers, opeland),
             _ => panic!("not unimplement command: {:?}", &command),
@@ -72,6 +75,10 @@ impl Calculator {
         bus.write(opeland, registers.A);
     }
 
+    fn STX<T: CpuBus>(registers: &Registers, bus: &mut T, opeland: u16) {
+        bus.write(opeland, registers.X);
+    }
+
     fn TXS(registers: &mut Registers) {
         registers.S = registers.X;
     }
@@ -102,6 +109,13 @@ impl Calculator {
         registers.PC = opeland;
     }
 
+    fn JSR<T: CpuBus>(registers: &mut Registers, bus: &mut T, opeland: u16) {
+        let pc = registers.PC - 1;
+        Calculator::push((pc >> 8) as u8, registers, bus);
+        Calculator::push(pc as u8, registers, bus);
+        registers.PC = opeland;
+    }
+
     fn SEI(registers: &mut Registers) {
         registers.P.interrupt = true;
     }
@@ -114,6 +128,20 @@ impl Calculator {
         if !registers.P.negative {
             registers.PC = opeland;
         }
+    }
+
+    fn TYA(registers: &mut Registers) {
+        let data = registers.Y;
+
+        registers.A = data;
+        registers.P.negative = (data & 0x80) == 0x80;
+        registers.P.zero = data == 0;
+    }
+
+    fn push<T: CpuBus>(data: u8, registers: &mut Registers, bus: &mut T) {
+        let addr = registers.S as u16;
+        bus.write(addr | 0x0100, data);
+        registers.S -= 1;
     }
 }
 
