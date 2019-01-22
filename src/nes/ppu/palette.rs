@@ -76,7 +76,7 @@ mod palette_group_test {
     assert_eq!(palette_group.get(2).get_palette_number(), 0x30);
     assert_eq!(palette_group.get(3).get_palette_number(), 0x40);
   }
-  
+
   #[test]
   fn eq_test() {
       let palettes_1 = PaletteGroup::build(&[0x10, 0x11, 0x12, 0x13]);

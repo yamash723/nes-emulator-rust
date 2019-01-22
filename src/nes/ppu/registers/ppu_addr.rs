@@ -25,8 +25,12 @@ impl PpuAddr {
         } else {
             self.addr = (data) << 8;
         }
-        
+
         self.is_lower_addr = !self.is_lower_addr;
+    }
+
+    pub fn reset_latch(&mut self) {
+        self.is_lower_addr = false;
     }
 }
 
@@ -42,8 +46,17 @@ mod ppu_addr_test {
 
         ppu_addr.write(upper_addr);
         assert_eq!(ppu_addr.addr, 0x2300);
-        
+
         ppu_addr.write(lower_addr);
         assert_eq!(ppu_addr.addr, 0x2345);
+    }
+
+    #[test]
+    fn reset_latch_test() {
+        let mut ppu_addr = PpuAddr::new();
+        ppu_addr.is_lower_addr = true;
+
+        ppu_addr.reset_latch();
+        assert_eq!(ppu_addr.is_lower_addr, false);
     }
 }

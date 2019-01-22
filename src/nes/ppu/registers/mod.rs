@@ -3,12 +3,14 @@ mod ppu_mask;
 mod ppu_scroll;
 mod ppu_addr;
 mod ppu_data;
+mod ppu_status;
 
 use self::ppu_ctrl::PpuCtrl;
 use self::ppu_mask::PpuMask;
 use self::ppu_scroll::PpuScroll;
 use self::ppu_addr::PpuAddr;
 use self::ppu_data::PpuData;
+use self::ppu_status::PpuStatus;
 
 use crate::nes::ppu::PpuContext;
 
@@ -18,9 +20,9 @@ pub struct Registers {
     pub ppu_addr: PpuAddr,
     pub ppu_data: PpuData,
     pub ppu_scroll: PpuScroll,
+    pub ppu_status: PpuStatus,
 
     // unimplemented!
-    // pub ppu_status:,
     // pub oam:,
 }
 
@@ -32,6 +34,7 @@ impl Registers {
             ppu_scroll: PpuScroll::new(),
             ppu_addr: PpuAddr::new(),
             ppu_data: PpuData::new(),
+            ppu_status: PpuStatus::new(),
         }
     }
 
@@ -48,9 +51,14 @@ impl Registers {
 
     pub fn read(&mut self, addr: u16, ppu_context: &mut PpuContext) -> u8 {
         match addr {
+            0x0002 => self.read_status(),
             0x0007 => self.ppu_data_read(ppu_context),
             _ => panic!("unimplement read address: {}", addr),
         }
+    }
+
+    pub fn get_nametable_id(&self) -> u8 {
+        self.ppu_ctrl.get_nametable_id()
     }
 
     fn ppu_data_read(&mut self, ppu_context: &mut PpuContext) -> u8 {
@@ -67,13 +75,18 @@ impl Registers {
         self.increment_vram();
     }
 
-    pub fn get_nametable_id(&self) -> u8 {
-        self.ppu_ctrl.get_nametable_id()
-    }
-
     fn increment_vram(&mut self) {
         let offset = self.ppu_ctrl.get_vram_increment_offset();
         self.ppu_addr.update(offset);
+    }
+
+    fn read_status(&mut self) -> u8 {
+        let data = self.ppu_status.to_u8();
+        self.ppu_scroll.enable_target_x();
+        self.ppu_addr.reset_latch();
+        self.ppu_status.vblank_flag = false;
+        self.ppu_status.sprite_hit = false;
+        data
     }
 }
 

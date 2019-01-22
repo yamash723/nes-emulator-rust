@@ -22,6 +22,10 @@ impl PpuScroll {
 
         self.write_target_is_x = !self.write_target_is_x;
     }
+
+    pub fn enable_target_x(&mut self) {
+        self.write_target_is_x = true;
+    }
 }
 
 #[cfg(test)]
@@ -49,5 +53,12 @@ mod ppu_scroll_test {
         ppu_scroll.write(new_x_pos);
         assert_eq!(ppu_scroll.x, new_x_pos);
         assert_eq!(ppu_scroll.y, y_pos);
+    }
+
+    #[test]
+    fn enable_target_x_test() {
+        let mut ppu_scroll = PpuScroll::new();
+        ppu_scroll.enable_target_x();
+        assert_eq!(ppu_scroll.write_target_is_x, true);
     }
 }
