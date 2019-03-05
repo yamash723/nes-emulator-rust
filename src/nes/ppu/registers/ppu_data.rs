@@ -77,6 +77,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -94,6 +95,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -111,6 +113,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -128,6 +131,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -146,6 +150,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -160,6 +165,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -174,6 +180,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 
@@ -188,6 +195,7 @@ mod ppu_data_test {
         let mut ppu_context = PpuContext {
             cram: Ram::new(vec![0;0x20]),
             vram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         };
 

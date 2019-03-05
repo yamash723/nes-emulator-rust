@@ -1,5 +1,6 @@
 pub mod background;
 pub mod sprite;
+pub mod sprite_with_ctx;
 pub mod palette;
 pub mod tile;
 pub mod tile_position;
@@ -12,6 +13,7 @@ use self::palette_ram::PaletteRam;
 use self::tile::Tile;
 use self::tile_position::TilePosition;
 use self::background::Background;
+use self::sprite_with_ctx::SpritesWithCtx;
 
 use crate::nes::ram::Ram;
 
@@ -19,6 +21,7 @@ pub struct Ppu {
     pub cycle: usize,
     pub line: usize,
     pub registers: Registers,
+    pub sprites: SpritesWithCtx,
     pub background: Background,
     pub context: PpuContext,
 }
@@ -26,6 +29,7 @@ pub struct Ppu {
 pub struct PpuContext {
     pub cram: Ram,
     pub vram: Ram,
+    pub sprite_ram: Ram,
     pub palette_ram: PaletteRam,
 }
 
@@ -44,10 +48,12 @@ impl Ppu {
             line: 0,
             registers: Registers::new(),
             background: Background::new(),
+            sprites: Vec::new(),
             context: PpuContext {
                 cram: Ram::new(character_rom),
                 vram: Ram::new(vec![0; 0x2000]),
                 palette_ram: PaletteRam::new(),
+                sprite_ram: Ram::new(vec![0; 0x0100]),
             }
 
         }
@@ -103,6 +109,11 @@ impl Ppu {
                 let tile = Tile::build(tile_pos, &self.context);
                 self.background.push(tile);
             }
+        }
+
+        if self.line == 241 {
+            self.registers.set_vblank();
+            self.registers.clear_sprite_hit();
         }
 
         // is not finished building all the background lines.

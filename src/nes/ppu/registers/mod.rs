@@ -4,6 +4,7 @@ mod ppu_scroll;
 mod ppu_addr;
 mod ppu_data;
 mod ppu_status;
+mod oam;
 
 use self::ppu_ctrl::PpuCtrl;
 use self::ppu_mask::PpuMask;
@@ -11,6 +12,7 @@ use self::ppu_scroll::PpuScroll;
 use self::ppu_addr::PpuAddr;
 use self::ppu_data::PpuData;
 use self::ppu_status::PpuStatus;
+use self::oam::Oam;
 
 use crate::nes::ppu::PpuContext;
 
@@ -21,9 +23,7 @@ pub struct Registers {
     pub ppu_data: PpuData,
     pub ppu_scroll: PpuScroll,
     pub ppu_status: PpuStatus,
-
-    // unimplemented!
-    // pub oam:,
+    pub oam: Oam,
 }
 
 impl Registers {
@@ -35,6 +35,7 @@ impl Registers {
             ppu_addr: PpuAddr::new(),
             ppu_data: PpuData::new(),
             ppu_status: PpuStatus::new(),
+            oam: Oam::new(),
         }
     }
 
@@ -88,6 +89,18 @@ impl Registers {
         self.ppu_status.sprite_hit = false;
         data
     }
+
+    pub fn set_vblank(&mut self) {
+        self.ppu_status.vblank_flag = true;
+    }
+
+    pub fn clear_vblank(&mut self) {
+        self.ppu_status.vblank_flag = false;
+    }
+
+    pub fn clear_sprite_hit(&mut self) {
+        self.ppu_status.sprite_hit = false;
+    }
 }
 
 #[cfg(test)]
@@ -100,6 +113,7 @@ mod registers_test {
         PpuContext {
             vram: Ram::new(vec![0;0x20]),
             cram: Ram::new(vec![0;0x20]),
+            sprite_ram: Ram::new(vec![0;0x20]),
             palette_ram: PaletteRam::new(),
         }
     }

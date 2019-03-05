@@ -102,6 +102,7 @@ mod tile_test {
             cram: cram,
             vram: vram,
             palette_ram: palette_ram,
+            sprite_ram: Ram::new(vec![0;0x20]),
         };
         let tile_pos = TilePosition::new(0, 0);
         let tile = Tile::build(tile_pos, &ppu_context);
