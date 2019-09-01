@@ -12,6 +12,7 @@ use self::cpu::{Cpu, Bus as CpuBus};
 use self::screen::Screen;
 
 use sdl2::event::Event;
+use console::Term;
 use time;
 
 const WIDTH: u32 = 256;
@@ -47,6 +48,7 @@ impl Nes {
         let mut screen = Screen::new(WIDTH, HEIGHT);
         let mut sec = time::get_time().sec;
         let mut frame = 0;
+        let term = Term::stdout();
 
         'main: loop {
             let cycle = {
@@ -72,7 +74,8 @@ impl Nes {
             }
 
             if sec != time::get_time().sec {
-                println!("{} FPS", frame);
+                term.clear_screen();
+                term.write_line(&format!("{} FPS", frame));
                 frame = 0;
                 sec = time::get_time().sec;
             }
