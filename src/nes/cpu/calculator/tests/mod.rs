@@ -44,3 +44,5 @@ mod cld;
 mod bpl;
 mod jsr;
 mod tya;
+mod dex;
+mod cpx;

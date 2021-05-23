@@ -32,6 +32,7 @@ impl Calculator {
             Command::TXS => Calculator::TXS(registers),
             Command::TYA => Calculator::TYA(registers),
             Command::CLD => Calculator::CLD(registers),
+            Command::CPX => Calculator::CPX(registers, bus, opeland),
             Command::BPL => Calculator::BPL(registers, opeland),
             _ => panic!("not unimplement command: {:?}", &command),
         };
@@ -134,6 +135,14 @@ impl Calculator {
         registers.A = registers.Y;
         registers.update_negative(registers.A);
         registers.update_zero(registers.A);
+    }
+
+    fn CPX<T: CpuBus>(registers: &mut Registers, bus: &mut T, opeland: u16) {
+        let data = bus.read(opeland);
+        let computed = registers.X as i16 - data as i16;
+        registers.update_negative(computed as u8);
+        registers.update_zero(computed as u8);
+        registers.set_carry(computed >= 0)
     }
 
     fn push<T: CpuBus>(data: u8, registers: &mut Registers, bus: &mut T) {
