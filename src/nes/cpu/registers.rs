@@ -38,6 +38,18 @@ impl Registers {
         self.P = reg.P;
         self.PC = reg.PC;
     }
+
+    pub fn update_zero(&mut self, v: u8) {
+        self.P.zero = v == 0
+    }
+
+    pub fn update_negative(&mut self, v: u8) {
+        self.P.negative = (v & 0x80) == 0x80;
+    }
+
+    pub fn set_carry(&mut self, v: bool) {
+        self.P.carry = v
+    }
 }
 
 #[derive(Debug, PartialEq)]

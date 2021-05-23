@@ -44,10 +44,9 @@ impl Calculator {
     }
 
     fn LDA_immediate(registers: &mut Registers, opeland: u16) {
-        let data = opeland as u8;
-        registers.A = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.A = opeland as u8;
+        registers.update_negative(registers.A);
+        registers.update_zero(registers.A);
     }
 
     fn LDX<T: CpuBus>(registers: &mut Registers, bus: &mut T, opeland: u16) {
@@ -55,10 +54,9 @@ impl Calculator {
     }
 
     fn LDX_immediate(registers: &mut Registers, opeland: u16) {
-        let data = opeland as u8;
-        registers.X = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.X = opeland as u8;
+        registers.update_negative(registers.X);
+        registers.update_zero(registers.X);
     }
 
     fn LDY<T: CpuBus>(registers: &mut Registers, bus: &mut T, opeland: u16) {
@@ -66,10 +64,9 @@ impl Calculator {
     }
 
     fn LDY_immediate(registers: &mut Registers, opeland: u16) {
-        let data = opeland as u8;
-        registers.Y = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.Y = opeland as u8;
+        registers.update_negative(registers.Y);
+        registers.update_zero(registers.Y);
     }
 
     fn STA<T: CpuBus>(registers: &Registers, bus: &mut T, opeland: u16) {
@@ -91,27 +88,21 @@ impl Calculator {
     }
 
     fn DEX(registers: &mut Registers) {
-        let data = registers.X.wrapping_sub(1);
-
-        registers.X = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.X = registers.X.wrapping_sub(1);
+        registers.update_negative(registers.X);
+        registers.update_zero(registers.X);
     }
 
     fn DEY(registers: &mut Registers) {
-        let data = registers.Y - 1;
-
-        registers.Y = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.Y = registers.Y.wrapping_sub(1);
+        registers.update_negative(registers.Y);
+        registers.update_zero(registers.Y);
     }
 
     fn INX(registers: &mut Registers) {
-        let data = registers.X + 1;
-
-        registers.X = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.X = registers.X.wrapping_add(1);
+        registers.update_negative(registers.X);
+        registers.update_zero(registers.X);
     }
 
     fn JMP(registers: &mut Registers, opeland: u16) {
@@ -140,11 +131,9 @@ impl Calculator {
     }
 
     fn TYA(registers: &mut Registers) {
-        let data = registers.Y;
-
-        registers.A = data;
-        registers.P.negative = (data & 0x80) == 0x80;
-        registers.P.zero = data == 0;
+        registers.A = registers.Y;
+        registers.update_negative(registers.A);
+        registers.update_zero(registers.A);
     }
 
     fn push<T: CpuBus>(data: u8, registers: &mut Registers, bus: &mut T) {
