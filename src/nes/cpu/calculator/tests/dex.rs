@@ -15,13 +15,12 @@ fn DEX_test() {
 #[test]
 fn DEX_test_overflow() {
     let mut registers = Registers::new();
-    let opeland = 0x00;
-    registers.X = opeland;
+    registers.X = 0x00;
 
     Calculator::DEX(&mut registers);
-    assert_eq!(registers.X, opeland);
-    assert_eq!(registers.P.negative, false);
-    assert_eq!(registers.P.zero, true);
+    assert_eq!(registers.X, 0xFF); // 0 - decriment-> 255
+    assert_eq!(registers.P.negative, true);
+    assert_eq!(registers.P.zero, false);
 }
 
 #[test]
