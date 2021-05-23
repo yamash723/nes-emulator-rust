@@ -1,5 +1,5 @@
 #[macro_use] extern crate arrayref;
-#[macro_use] extern crate lazy_static;
+extern crate once_cell;
 extern crate sdl2;
 
 mod nes;

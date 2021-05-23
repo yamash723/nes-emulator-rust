@@ -7,9 +7,9 @@ edition = "2018"
 
 [dependencies]
 arrayref = "*"
-lazy_static = "1.0"
 time = "*"
 console = "0.8.0"
+once_cell = "1.5.2"
 
 [dependencies.sdl2]
 version = "0.31"
