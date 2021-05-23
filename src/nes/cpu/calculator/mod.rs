@@ -23,6 +23,7 @@ impl Calculator {
             Command::STA => Calculator::STA(registers, bus, opeland),
             Command::STX => Calculator::STX(registers, bus, opeland),
             Command::BNE => Calculator::BNE(registers, opeland),
+            Command::DEX => Calculator::DEX(registers),
             Command::DEY => Calculator::DEY(registers),
             Command::INX => Calculator::INX(registers),
             Command::JMP => Calculator::JMP(registers, opeland),
@@ -87,6 +88,14 @@ impl Calculator {
         if !registers.P.zero {
             registers.PC = opeland;
         }
+    }
+
+    fn DEX(registers: &mut Registers) {
+        let data = registers.X.wrapping_sub(1);
+
+        registers.X = data;
+        registers.P.negative = (data & 0x80) == 0x80;
+        registers.P.zero = data == 0;
     }
 
     fn DEY(registers: &mut Registers) {
